@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 
+
 //get all User
 export const getAllUser = async(req, res) => {
   try {
@@ -56,7 +57,9 @@ export const login = async (req, res) => {
          return res.json({ message: "Wrong Password...", success: false });
        }
    
-       const token = jwt.sign({ userID: user._id }, "Harsh@12");
+       const token = jwt.sign({ userId: user._id }, "Harsh@12");
+       console.log(user);
+       
    
        res.json({ message: `Welcome ${user.name}`, token, success: true });
      } catch (error) {
@@ -73,7 +76,7 @@ export const login = async (req, res) => {
       res.json({message:"Login First", success:false});
     }
     var decode = jwt.verify(token,"Harsh@12" )
-    const id = decode.userID
+    const id = decode.userId
 
     const user = await User.findById(id)
     if(user){
